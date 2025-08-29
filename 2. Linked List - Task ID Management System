@@ -1,0 +1,39 @@
+2. Linked List - Task ID Management System
+import java.util.*;
+class  Taskid{
+    int id;
+    Taskid next;
+    
+    public Taskid(int id){
+        this.id=id;
+        this.next=null;
+    }
+}
+public class Solution {
+    Taskid head;
+    
+    public void insertatfront(int id){
+        Taskid newNode=new Taskid(id);
+        newNode.next=head;
+        head=newNode;
+    }
+    
+    public void display(){
+        Taskid temp=head;
+        while(temp!=null){
+            System.out.print(temp.id+" ");
+            temp=temp.next;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        Solution q=new Solution();
+        
+        int n=sc.nextInt();
+        for(int i=0;i<n;i++){
+            int taskId = sc.nextInt();
+            q.insertatfront(taskId);
+        }
+        q.display();
+    }
+}
