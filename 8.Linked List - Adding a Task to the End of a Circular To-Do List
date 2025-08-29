@@ -1,0 +1,61 @@
+8.Linked List - Adding a Task to the End of a Circular To-Do List
+import java.io.*;
+import java.util.*;
+class CircularNode
+{
+    int taskId;
+    CircularNode next;
+    
+    CircularNode(int taskId)
+    {
+        this.taskId=taskId;
+        this.next=null;
+    }
+}
+public class Solution 
+{
+    CircularNode head;
+    
+    void insertatend(int taskId)
+    {
+        CircularNode newNode=new CircularNode(taskId);
+        if(head==null){
+            head=newNode;
+            newNode.next=head;
+            return;
+        }
+        CircularNode temp=head;
+        while(temp.next!=head)
+        {
+            temp=temp.next;
+        }
+        temp.next=newNode;
+        newNode.next=head;
+    }
+    
+    void printCircularList()
+    {
+        if(head==null){
+            return;
+        }
+        CircularNode temp=head;
+        do
+        {
+            System.out.print(temp.taskId+ " ");
+            temp=temp.next;
+        } while(temp!=head);
+    
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        Solution cl=new Solution();
+        int No_of_Id=sc.nextInt();
+        for(int i=0;i<No_of_Id;i++){
+            int taskid=sc.nextInt();
+            cl.insertatend(taskid);
+        }
+        cl.printCircularList();
+    }
+}
+
