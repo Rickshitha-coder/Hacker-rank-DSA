@@ -1,0 +1,63 @@
+10. Linked List - Reversing a Playlist
+import java.io.*;
+import java.util.*;
+class SongNode{
+    String songname;
+    SongNode next;
+    
+    SongNode(String songname)
+    {
+        this.songname=songname;
+        this.next=null;
+    }
+}
+public class Solution 
+{
+    //to reverse the playlist (method) without using object that's why we use static
+    public static SongNode reverse(SongNode head)
+    {
+        SongNode current = head;  //Stores current node
+        SongNode prev=null;  //previous node
+        SongNode next=null;  //next node
+        //for swapping
+        while(current!=null){   // s1 s2 s3 s4 s5
+            next =current.next;  //s2  
+            current.next=prev;   //null
+            
+            prev=current;  //s1  s2
+            current=next;  //s2  s3
+        }
+        return prev;
+        
+    }
+    
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        Solution pl=new Solution();
+        //number of nodes
+        int n=Integer.parseInt(sc.nextLine());
+        SongNode head=null, tail=null; // to know which is taila nd head for rversing
+        for(int i=0;i<n;i++){
+            String songname=sc.nextLine();
+            SongNode newNode=new SongNode(songname);
+            if(head==null)
+            {
+                head=newNode;  //new Node one node
+                tail=newNode;
+            }
+            else
+            {
+                tail.next=newNode;  //already having nodes
+                tail=newNode;
+            }
+        }
+        head=reverse(head);  //call the reverse method
+        SongNode temp=head;  
+        while(temp!=null){
+            System.out.print(temp.songname+" ");
+            temp=temp.next;
+        }
+    }
+}
