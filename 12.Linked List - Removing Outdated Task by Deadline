@@ -1,0 +1,66 @@
+12.Linked List - Removing Outdated Task by Deadline
+import java.io.*;
+import java.util.*;
+class Node{
+    int taskid;
+    Node next;
+    
+    Node (int taskid){
+        this.taskid=taskid;
+        this.next=null;
+    }
+}
+
+public class Solution {
+    
+    public static Node remove(Node head,int p,int n)
+    {
+        Node temp=head;
+        //check whether position and n value is same
+        if(n==p){       //number of values == position
+            return head.next;
+        }  
+        //find the position to be removed
+        
+        int removeIndex=n - p;
+        
+        for(int i=1;i<removeIndex;i++)
+        {
+            temp=temp.next;    
+        }
+        temp.next=temp.next.next;
+        return head;
+    } //end of removal process
+   
+    public static void print(Node head){
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.taskid+" ");
+            temp=temp.next;
+        }
+    }
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+        //get the number of node
+        int N= sc.nextInt();
+        Node head=null, tail=null;
+        for(int i=0;i<N;i++){
+          int taskid=sc.nextInt();
+          Node newNode=new Node(taskid);   // node creation
+          
+         //check head is null
+            if(head==null){
+                head=newNode;
+                tail=newNode;
+            }
+            else{
+                tail.next=newNode;
+                tail=newNode;
+            }
+        }//end of for loop
+        //get the position to be removed
+        int position=sc.nextInt();
+        head=remove(head,position,N);
+        print(head);
+    }
+}
