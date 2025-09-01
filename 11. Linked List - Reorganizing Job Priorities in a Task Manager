@@ -1,0 +1,37 @@
+11. Linked List - Reorganizing Job Priorities in a Task Manager
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+      Scanner sc=new Scanner(System.in);
+        
+     // get the total number of tasks
+        int N= sc.nextInt();
+        int[] al=new int[N];
+        //get the tasks
+        for(int i=0;i<N;i++){
+            al[i]= sc.nextInt();
+        }
+        //get the position to be swapped from the begining and end
+        int pos=sc.nextInt();
+        // 1 2 3 4 5
+        //0 1 2 3 4 -->index
+        //pos = 2
+        int startIndex=pos -1;   //2-1=1
+        int endIndex = N - pos;  //5-2=3
+        
+        //swap
+        
+        int temp=al[startIndex];
+        al[startIndex]=al[endIndex];
+        al[endIndex]=temp;
+        
+        //display the list
+        for(int i=0;i<N;i++){
+            System.out.print(al[i]+" ");
+        }
+    }
+}
