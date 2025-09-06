@@ -1,0 +1,113 @@
+Date : 03/09/2025
+13.Linked List - Merging Patient Queues in a Hospital
+
+import java.util.*; 
+
+
+class Node {
+    int data;       
+    Node next;      
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class Solution {
+
+    // Function to merge two sorted linked lists
+    public static Node mergeLists(Node l1, Node l2) {
+        // If one of the lists is empty, return the other
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+
+        Node head;  // Will point to the first node of the merged list
+        Node tail;  // Will point to the last node of the merged list
+
+        // Decide which node should be the head of the merged list
+        if (l1.data < l2.data) {
+            head = l1;       // First list's node is smaller
+            l1 = l1.next;    // Move l1 to the next node
+        } else {
+            head = l2;       // Second list's node is smaller
+            l2 = l2.next;    // Move l2 to the next node
+        }
+
+        // Initially, head is also the tail
+        tail = head;
+
+        // Traverse both lists until one becomes empty
+        while (l1 != null && l2 != null) {
+            if (l1.data < l2.data) {
+                // Attach l1's node to the merged list
+                tail.next = l1;
+                l1 = l1.next; // Move l1 forward
+            } else {
+                // Attach l2's node to the merged list
+                tail.next = l2;
+                l2 = l2.next; // Move l2 forward
+            }
+            tail = tail.next; // Update tail to point to the last node
+        }
+
+        // Attach remaining nodes from whichever list is not empty
+        if (l1 != null) 
+            tail.next = l1;
+        if (l2 != null) 
+            tail.next = l2;
+
+        // Return the head of the merged linked list
+        return head;
+    }
+
+    // Function to create a linked list from an array
+    public static Node createList(int[] arr) {
+        if (arr.length == 0) 
+            return null;
+
+        // Create the head node
+        Node head = new Node(arr[0]);
+        Node curr = head;
+
+        // Add the rest of the nodes
+        for (int i = 1; i < arr.length; i++) {
+            curr.next = new Node(arr[i]);
+            curr = curr.next;
+        }
+        return head;
+    }
+
+    // Function to print a linked list
+    public static void printList(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input for first list
+        int n = sc.nextInt();         // Number of nodes in first list
+        int[] arr1 = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr1[i] = sc.nextInt();   // Read elements
+        }
+        Node l1 = createList(arr1);   // Create first linked list
+
+        // Input for second list
+        int m = sc.nextInt();         // Number of nodes in second list
+        int[] arr2 = new int[m];
+        for (int i = 0; i < m; i++) {
+            arr2[i] = sc.nextInt();   // Read elements
+        }
+        Node l2 = createList(arr2);   // Create second linked list
+
+        // Merge the two sorted lists
+        Node merged = mergeLists(l1, l2);
+
+        printList(merged);
+    }
+}
