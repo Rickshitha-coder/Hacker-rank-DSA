@@ -1,0 +1,107 @@
+Date : 06/09/2025
+15. Linked List - Add Two Numbers Represented as Product IDs
+import java.io.*;
+import java.util.*;
+class Node{
+    int pId;
+    Node next;
+    
+    Node(int pId){
+        this.pId=pId;
+        this.next=null;
+    }
+}
+public class Solution 
+{
+    static int carry=0;  // to handle the carry over numbers
+    public static Node createNode(Node head,int prodId){
+        Node newNode=new Node(prodId);
+        if(head==null){
+            head=newNode;
+            return head;
+        }
+        else{
+            Node temp=head;
+            while(temp.next!=null){
+                temp=temp.next; // it moves to the next nodea
+            }
+            temp.next=newNode;
+            return head;
+        }
+    }//end of the createnode method
+    
+    static Node pad(Node head,int diff)
+    {
+        for(int i=0;i<diff;i++)
+        {
+            Node n=new Node(0);         //create a node and insert 0   that front empty values fill with 0
+            n.next=head;
+            head=n;
+        }    
+        return head;
+    }//end of pad node
+    
+    static Node add(Node p1,Node p2)
+    {
+         if(p1==null && p2==null)   
+         {
+             return null;
+         }
+        Node next=add(p1.next,p2.next); // to move the last digit
+        
+        int sum = p1.pId + p2.pId +  carry;
+        
+        Node current = new Node(sum%10);   //7+7=14 means remainder 4 and quotiesnt 1 quotient value will be carry
+        current.next=next;  //moves to the previous digit
+        carry = sum /10;  //quotient   store the carry   
+        return current;
+    }//end of add node
+    
+    static Node addNode(Node p1,Node p2,int lenn1,int lenn2)
+    {
+        if(lenn1 < lenn2){
+            p1=pad(p1,lenn2 - lenn1);
+        }    
+        else if(lenn2 < lenn1){
+            p2=pad(p2,lenn1 - lenn2);
+        }
+        Node result=add(p1,p2);  // method call add
+        
+        if(carry>0){
+            Node c=new Node(carry);
+            c.next=result;
+            return c;
+        }
+        return result;
+    }//end of add node
+    
+    
+    static void print(Node result){
+        Node temp=result;
+        while(temp!=null){
+            System.out.print(temp.pId+" ");
+            temp=temp.next;
+        }
+    }
+
+    public static void main(String[] args) 
+    {
+      Scanner sc=new Scanner(System.in);
+       Node p1=null, p2=null;
+      int n1=sc.nextInt();
+       for(int i=0;i<n1;i++)
+       {
+           int pro1=sc.nextInt();
+           p1=createNode(p1,pro1);
+       }
+        
+        int n2=sc.nextInt();
+        for(int i=0;i<n2;i++){
+            int pro2=sc.nextInt();
+            p2=createNode(p2,pro2);
+        }
+        
+        Node result=addNode(p1,p2,n1,n2);
+        print(result);
+    }
+}
