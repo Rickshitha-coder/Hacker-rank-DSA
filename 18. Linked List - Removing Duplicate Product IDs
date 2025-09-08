@@ -1,0 +1,96 @@
+Date :08-09-2025
+18. Linked List - Removing Duplicate Product IDs
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // First list
+        int n1 = sc.nextInt();
+        Node p1 = null;
+        for (int i = 0; i < n1; i++) {
+            int pro1 = sc.nextInt();
+            p1 = insert(p1, pro1);
+        }
+
+        // Second list
+        int n2 = sc.nextInt();
+        Node p2 = null;
+        for (int i = 0; i < n2; i++) {
+            int pro2 = sc.nextInt();
+            p2 = insert(p2, pro2);
+        }
+
+        // Find intersection
+        findIntersection(p1, p2);
+    }
+}
+
+
+import java.io.*;
+import java.util.*;
+
+class Node {
+    int id;
+    Node next;
+
+    Node(int id) {
+        this.id = id;
+        this.next = null;
+    }
+}
+
+public class Solution {
+    // remove duplicate method
+    static Node removeDuplicate(Node head) {
+        Node current = head;
+
+        while (current != null) {
+            Node prev = current;  
+            Node temp = current.next;
+
+            while (temp != null) {
+                if (temp.id == current.id) {
+                    // skip duplicate
+                    prev.next = temp.next;
+                    temp = temp.next;
+                } else {
+                    prev = temp;
+                    temp = temp.next;
+                }
+            }
+            current = current.next;  // move outer loop
+        }
+        return head;
+    }
+
+    // print linked list
+    static void print(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.id + " ");
+            temp = temp.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Node head = null, tail = null;
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            int id = sc.nextInt();
+            Node newNode = new Node(id);
+
+            if (head == null) {   // fixed
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        Node result = removeDuplicate(head);
+        print(result);
+    }
+}
