@@ -1,0 +1,95 @@
+Date : 08/09/2025
+19. Stack - Airport Baggage Handling System
+
+import java.util.*;
+
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class BaggageStack {
+    private Node top;   // top of stack
+    private int size;   // number of containers   keeps track of how many containers are in the stack.
+
+    public BaggageStack() {   //Constructor initializes an empty stack
+        this.top = null;
+        this.size = 0;
+    }
+
+    // Push operation
+    public void push(int x) {
+        Node newNode = new Node(x);  //create a new Node
+        newNode.next = top;   //link new Node to the current top
+        top = newNode;   //update top pointer
+        size++;    //update size
+    }
+
+    // Pop operation
+    public String pop() {
+        if (isEmpty()) {
+            return "Stack Underflow";
+        }
+        top = top.next;     //remove top and update  move pointer to next node
+        size--;   //decrese the size of stack
+        return "";
+    }
+
+    // Top operation
+    public String getTop() {
+        if (isEmpty()) {
+            return "Stack Underflow";
+        }
+        return String.valueOf(top.data);  //return the top of the element 
+    }
+
+    // IsEmpty operation
+    public boolean isEmpty() {
+        return top == null;     //if there is no top element means top ==null so it isempty=true
+    }
+
+    // Size operation
+    public int size() {
+        return size;      //return the size of the stack
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = Integer.parseInt(sc.nextLine());  // number of operations
+        BaggageStack stack = new BaggageStack(); // Linked List stack
+        
+        for (int i = 0; i < N; i++) {
+            String command = sc.nextLine();
+            
+            if (command.startsWith("Push")) {   //e.g.,Push 10
+                String[] parts = command.split(" ");  //Split string into words → ["Push", "10"].  index value of push is 0 and 10 is 1
+                int value = Integer.parseInt(parts[1]);  //converts "10" into integer 10
+                stack.push(value);   //adds this container to the stack
+            } 
+            else if (command.equals("Pop")) {
+                String result = stack.pop();
+                if (!result.equals("")) {   //If result is NOT equal to an empty string…
+                    System.out.println(result);  //So the condition is true only if there’s an error message.
+                }
+            } 
+            else if (command.equals("Top")) {   
+                System.out.println(stack.getTop());
+            } 
+            else if (command.equals("IsEmpty")) {
+                System.out.println(stack.isEmpty() ? "true" : "false");
+            } 
+            else if (command.equals("Size")) {
+                System.out.println(stack.size());
+            }
+        }
+        
+        sc.close();
+    }
+}
