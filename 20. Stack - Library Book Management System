@@ -1,0 +1,94 @@
+Date : 09-09-2025
+20. Stack - Library Book Management System
+import java.util.*;
+
+class Node {
+    String data;
+    Node next;
+    Node(String data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class BookStack {
+    private Node top;   // top of stack
+    private int size;   // number of books
+
+    public BookStack() {
+        this.top = null;
+        this.size = 0;
+    }
+
+    // Push operation
+    public void push(String x) {
+        Node newNode = new Node(x);
+        newNode.next = top;
+        top = newNode;
+        size++;
+    }
+
+    // Pop operation
+    public String pop() {
+        if (isEmpty()) {
+            return "Stack Underflow";
+        }
+        String popped = top.data;
+        top = top.next;
+        size--;
+        return popped;
+    }
+
+    // Top operation
+    public String getTop() {
+        if (isEmpty()) {
+            return "Stack Underflow";
+        }
+        return top.data;
+    }
+
+    // IsEmpty operation
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    // Size operation
+    public int size() {
+        return size;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = Integer.parseInt(sc.nextLine());  // number of operations
+        BookStack stack = new BookStack(); // Linked List stack
+
+        for (int i = 0; i < N; i++) {
+            String command = sc.nextLine();
+
+            if (command.startsWith("Push")) {
+                String bookName = command.substring(5); // everything after "Push "
+                stack.push(bookName);
+            } 
+            else if (command.equals("Pop")) {
+                String result = stack.pop();
+                if (result.equals("Stack Underflow")) {
+                    System.out.println(result);
+                }
+            } 
+            else if (command.equals("Top")) {
+                System.out.println(stack.getTop());
+            } 
+            else if (command.equals("IsEmpty")) {
+                System.out.println(stack.isEmpty() ? "true" : "false");
+            } 
+            else if (command.equals("Size")) {
+                System.out.println(stack.size());
+            }
+        }
+
+        sc.close();
+    }
+}
