@@ -1,0 +1,69 @@
+Date : 09-09-2025
+21. Stack - Undo Operation in a Text Editor
+import java.util.*;
+
+public class Main {
+    // Custom Stack implementation using array
+    static class CharStack {
+        private char[] arr;   // Array to hold stack elements
+        private int top;      // Index of the current top element
+        private int capacity; // Maximum size of stack
+
+        // Constructor to initialize stack
+        CharStack(int size) {
+            arr = new char[size];  // Allocate array
+            capacity = size;       // Store capacity
+            top = -1;              // Stack is empty initially
+        }
+
+        // Push element into stack
+        public void push(char c) {
+            if (top == capacity - 1) {  // Check overflow
+                System.out.println("Stack Overflow");
+                return;
+            }
+            arr[++top] = c; // Increment top, then place the char
+        }
+
+        // Pop element from stack
+        public char pop() {
+            if (isEmpty()) {   // If empty, return null char
+                return '\0';
+            }
+            return arr[top--]; // Return top element, then decrement top
+        }
+
+        // Check if stack is empty
+        public boolean isEmpty() {
+            return top == -1;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Step 1: Read the input sentence
+        String sentence = sc.nextLine();
+
+        // Step 2: Create stack sized to sentence length
+        CharStack stack = new CharStack(sentence.length());
+
+        // Step 3: Push each character of the sentence onto the stack
+        for (int i = 0; i < sentence.length(); i++) {
+            stack.push(sentence.charAt(i));
+        }
+
+        // Step 4: Pop all characters to build reversed sentence
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
+
+        // Step 5: Print reversed result
+        System.out.println(reversed.toString());
+
+        sc.close(); // Close scanner
+    }
+}
+
+
