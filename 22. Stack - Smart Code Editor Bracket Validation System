@@ -1,0 +1,75 @@
+Date : 10-09-2025
+22. Stack - Smart Code Editor Bracket Validation System
+import java.io.*;
+import java.util.*;
+
+public class BracketStack {
+    private char[] stack;
+    private int top;
+    
+    //create a consructor
+    BracketStack(int length)   //capacity --> lenght becuase it string 
+    {
+        stack =new char[length];
+        top = -1;
+    }
+    
+    
+    //method for push
+    public void push(char c)
+    {
+        stack[++top]=c;  //top is -1 so first itself we increment the value that's why ++top
+    }
+    
+    //methos for isempty
+    public boolean isEmpty()
+    {
+        return top==-1;
+    }
+    
+    //method for pop
+    public char pop()
+    {
+        return stack[top--];
+    }
+    
+    //method of isvalid
+    public static boolean isValid(String input)  //it going to return true or false that's why boolean
+    {
+        int len = input.length();
+        BracketStack bs=new BracketStack(len);
+        
+        for (char c:input.toCharArray()) //to get by each character  
+        {
+            if(c=='(' || c=='{' || c=='[')
+            {
+                bs.push(c);
+            }
+            else
+            {
+                if(bs.isEmpty())
+                {
+                    return false;
+                }
+                char top = bs.pop(); //pop
+                if((c==')' && top!='(')  ||  (c=='}' && top!='{')  ||  (c==']' && top!='[') )
+                {
+                    return false;
+                }
+            }//end of else
+        }  //end for loop
+        return bs.isEmpty();
+    }
+    
+    
+    public static void main(String[] args) 
+    {
+      Scanner s = new Scanner(System.in);
+        
+        String input =s.nextLine().trim();  // to avoid space we use trim
+        
+        System.out.println(isValid(input));
+    
+    }
+}
+
