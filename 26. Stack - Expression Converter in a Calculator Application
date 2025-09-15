@@ -1,0 +1,83 @@
+Date :  15-09-2025
+26. Stack - Expression Converter in a Calculator Application
+
+import java.util.*;
+
+class Stack {
+    int top;                // stack pointer
+    char[] expression;      // stack storage
+
+    Stack(int length) {
+        expression = new char[length];
+        top = -1;
+    }
+
+    // Precedence of operators
+    private int precedence(char op) {
+        if (op == '+' || op == '-'){ 
+            return 1;
+        }
+        if (op == '*' || op == '/'){
+           return 2;  
+        }
+        return 0;
+    }
+
+    // Convert infix to postfix
+    public void evaluate(String exp) {
+        int len = exp.length();
+
+        for (int i = 0; i < len; i++) {
+            char ch = exp.charAt(i);
+
+            // Ignore spaces
+            if (ch == ' ') {
+                continue;
+            }
+
+            // If operand -> print directly
+            if (Character.isLetterOrDigit(ch)) {
+                System.out.print(ch + " ");
+            }
+            // If '(' -> push to stack
+            else if (ch == '(') {
+                expression[++top] = ch;
+            }
+            // If ')' -> pop until '('
+            else if (ch == ')') {
+                while (top >= 0 && expression[top] != '(') {
+                    System.out.print(expression[top--] + " ");
+                }
+                if (top >= 0 && expression[top] == '(') {
+                    top--; // remove '('
+                }
+            }
+            // If operator (+, -, *, /)
+            else {
+                // Pop operators with higher or equal precedence
+                while (top >= 0 && precedence(expression[top]) >= precedence(ch)) {
+                    System.out.print(expression[top--] + " ");
+                }
+                // Push current operator
+                expression[++top] = ch;
+            }
+        }
+
+        // Pop all remaining operators
+        while (top >= 0) {
+            if (expression[top] != '(') {
+                System.out.print(expression[top] + " ");
+            }
+            top--;
+        }
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String exp = sc.nextLine();   // Example input: A + B * C - D
+        Stack s = new Stack(exp.length());
+        s.evaluate(exp);              // Example output: A B C * + D -
+    }
+}
