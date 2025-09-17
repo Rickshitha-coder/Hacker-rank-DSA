@@ -1,0 +1,50 @@
+Date : 17-09-2025
+30.Stack - Measuring Valid Parentheses
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    //method for valid count parathese
+    private static int validcountparatheses(String s)
+    {
+        Stack<Integer> st= new Stack<>();
+        st.push(-1);
+        int maxlen=0;
+        
+        for(int i=0;i<s.length();i++)
+        {
+            char c=s.charAt(i);
+            
+            if(c=='(')
+            {
+                st.push(i);
+            }
+            else
+            {
+                st.pop();
+                if(st.isEmpty())
+                {
+                    st.push(i);
+                }
+                else
+                {
+                      maxlen = Math.max(maxlen, i - st.peek());
+                }    
+            }//end of else loop
+        }//end of for loop
+        return maxlen;
+    }//end of  method
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        sc.nextLine();
+        
+        for(int i=0;i<n;i++){
+            String ex=sc.nextLine().trim();
+            System.out.println(validcountparatheses(ex));
+        }
+    }
+}
