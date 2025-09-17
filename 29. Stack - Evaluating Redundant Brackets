@@ -1,0 +1,72 @@
+Date : 17-09-2025
+29. Stack - Evaluating Redundant Brackets
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+
+    private static boolean isRedundant(String expression)
+    {
+        Stack<Character> st=new Stack<>();
+        
+        for(char c:expression.toCharArray())
+        {
+            if(c!=')')  //if not a closing  bracket
+            {
+                st.push(c);
+            }// end of if
+            
+            else
+            {
+                boolean opFound=false;
+                
+                while(!st.isEmpty() && st.peek()!='(')
+                {
+                    char top = st.pop();
+                    if(top =='+' || top =='-' || top == '*' || top == '/')
+                    {
+                        opFound=true;
+                    }//end of if
+                }//end of while
+                
+                if(!st.isEmpty())   //pop until '('
+                {
+                    st.pop();
+                }
+                if(!opFound)
+                {
+                    return true;
+                }
+            }//end of else
+        } //end of for loop
+        
+        return false;
+
+        }//end of redundant method
+    
+    
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        //get the total number of expressions to be checked
+        int n=sc.nextInt();
+        
+        sc.nextLine();
+        
+        for(int i=0;i<n;i++)
+        {
+            String expression = sc.nextLine();
+            
+            if(isRedundant(expression))  //method for redundancy vertification
+            {
+                System.out.println("Yes");
+            }
+            else
+            {
+                System.out.println("No");
+            }
+        }//end of for loop
+        
+    }
+}
