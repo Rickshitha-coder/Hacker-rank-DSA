@@ -1,0 +1,109 @@
+Date : 20-09-2025 HW
+34.Queue - Customer Support Ticketing System
+
+import java.io.*;
+import java.util.*;
+
+class Node{
+    String ticket;
+    Node next;
+    
+    Node(String ticket){
+        this.ticket=ticket;
+        this.next=null;
+    }
+}
+
+class Queue{
+    private Node front,rear;
+    
+    public Queue(){
+        this.front=null;
+        this.rear=null;
+    }
+    
+    //enqueue 
+    public void enqueue(String ticket)
+    {
+        Node newNode=new Node(ticket);
+        if(rear==null)  //empty
+        {
+            front=newNode;
+            rear=newNode;
+            return;
+        }  //else
+        rear.next=newNode;
+        rear=newNode;
+    }//end of enqueue
+    
+    //dequeue
+    public void dequeue(){
+        if(front==null)
+        {
+            System.out.println("Queue is empty");
+            return;
+        }
+        System.out.println("Processed Ticket: "+front.ticket);
+        front=front.next;
+        if(front==null) ///queue at last empty
+        {
+            rear=null;
+        }
+    }//end if queue
+    
+    
+    //disply
+    public void display() {
+    if (front == null) {
+        System.out.println("Queue is empty.");
+        return;
+    }
+    System.out.print("Current Queue:");
+    Node temp = front;
+    while (temp != null) {
+        System.out.print(" " + temp.ticket);  
+        temp = temp.next;
+    }
+    System.out.println();
+}
+
+    
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        Queue q=new Queue();
+        
+        int n=Integer.parseInt(sc.nextLine().trim());
+        
+        for(int i=0;i<n;i++){
+            String line=sc.nextLine().trim();
+            String[] parts=line.split(" ",2);
+            
+            switch(parts[0]){
+                case "ENQUEUE":
+                    if(parts.length==2){
+                        q.enqueue(parts[1]);
+                    }
+                    else
+                    {
+                        System.out.println("Invalid command.");
+                    }
+                    break;
+                case "DEQUEUE":
+                    q.dequeue();
+                    break;
+                case "DISPLAY":
+                    q.display();
+                    break;
+                    
+                default:
+                    System.out.println("Invalid command.");
+            }//end of switch
+        }
+        
+    }
+}
+
