@@ -1,0 +1,97 @@
+Date : 22-09-2025 HW
+36.Queue - File Version Management
+
+import java.util.*;
+
+public class Main {
+    static class VersionControl {
+        Queue<Integer> q1 = new LinkedList<>();
+        Queue<Integer> q2 = new LinkedList<>();
+
+        // Push new version (O(1))
+        public void push(int version) {
+            q1.add(version);
+            System.out.println("Pushed: " + version);
+        }
+
+        // Pop latest version (O(n))
+        public void pop() {
+            if (q1.isEmpty()) {
+                System.out.println("Stack is empty, cannot pop");
+                return;
+            }
+
+            // Move elements until last
+            while (q1.size() > 1) {
+                q2.add(q1.poll());
+            }
+
+            int removed = q1.poll(); // last element
+            System.out.println("Popped: " + removed);
+
+            // Swap queues
+            Queue<Integer> temp = q1;
+            q1 = q2;
+            q2 = temp;
+        }
+
+        // View latest version (O(n))
+        public void top() {
+            if (q1.isEmpty()) {
+                System.out.println("Stack is empty, no top version");
+                return;
+            }
+
+            int top = -1;
+            while (!q1.isEmpty()) {
+                top = q1.poll();
+                q2.add(top);
+            }
+
+            System.out.println("Top version: " + top);
+
+            // Restore
+            Queue<Integer> temp = q1;
+            q1 = q2;
+            q2 = temp;
+        }
+
+        // Check if stack is empty
+        public void empty() {
+            System.out.println("Is stack empty: " + q1.isEmpty());
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int operations = sc.nextInt();
+        sc.nextLine();
+
+        VersionControl vc = new VersionControl();
+
+        for (int i = 0; i < operations; i++) {
+            String[] input = sc.nextLine().split(" ");
+            String command = input[0];
+
+            switch (command) {
+                case "push":
+                    int version = Integer.parseInt(input[1]);
+                    vc.push(version);
+                    break;
+                case "pop":
+                    vc.pop();
+                    break;
+                case "top":
+                    vc.top();
+                    break;
+                case "empty":
+                    vc.empty();
+                    break;
+                default:
+                    System.out.println("Invalid command");
+            }
+        }
+        sc.close();
+    }
+}
+
