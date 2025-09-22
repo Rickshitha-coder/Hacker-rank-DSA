@@ -1,0 +1,101 @@
+Date : 22-09-2025
+35. Queue - Emergency Room Triage System
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    static class Patient
+    {
+        String pName;
+        int pSeverity;
+        
+        Patient(String pName,int pSeverity)
+        {
+            this.pName=pName;
+            this.pSeverity=pSeverity;
+        }
+    } //end of static
+    
+    //list of enqueue
+    List<Patient> pQueue=new ArrayList<>();  //patient is data type of class
+    
+    public void enqueue(String pName,int pSeverity)
+    {
+        pQueue.add(new Patient(pName,pSeverity));  //pass the object of patient
+    } 
+    
+    //dequeue
+    public void dequeue()
+    {
+        if(pQueue.isEmpty())
+        {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        Patient highest=pQueue.get(0);
+        int index=0;
+        for(int i=1;i<pQueue.size();i++)
+        {
+            Patient p =pQueue.get(i);
+            if(p.pSeverity > highest.pSeverity)
+            {
+                highest=p;
+                index=i;
+            }
+        }//end of for
+        pQueue.remove(index); // remove in built method  remove based index position
+        
+        System.out.println("Treated Patient: "+highest.pName);
+    }//end of dequeue
+    
+    public void display()
+    {
+        if(pQueue.isEmpty())
+        {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        List<Patient> sorted=new ArrayList<>(pQueue);
+        sorted.sort((a,b)->b.pSeverity - a.pSeverity);
+        
+        System.out.print("Current Queue: ");
+        for(int i= 0;i<sorted.size();i++)
+        {
+            Patient p=sorted.get(i);
+            System.out.print(p.pName+"("+p.pSeverity+")");
+            if(i<sorted.size()-1)
+            {
+                System.out.print(" ");
+            }
+            
+        }System.out.println();
+    }
+    
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        int operations=Integer.parseInt(sc.nextLine());
+        
+        Solution q=new Solution();
+        
+        for(int i=0;i<operations;i++)
+        {
+            String[] parts=sc.nextLine().split(" ");
+            
+            if(parts[0].equals("ENQUEUE"))
+            {
+                q.enqueue(parts[1],Integer.parseInt(parts[2]));   
+            }
+            else if(parts[0].equals("DEQUEUE"))
+            {
+                q.dequeue();
+            }
+            else if(parts[0].equals("DISPLAY"))
+            {
+                q.display();
+            }
+        }//end of for
+    }//end of main
+}
