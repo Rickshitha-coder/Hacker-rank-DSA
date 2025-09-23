@@ -1,0 +1,92 @@
+Date : 23/09/2025 HW
+38. Queue - Movie Theatre Seat Reservation System
+
+
+import java.util.*;
+
+class CircularQueue {
+    int[] arr;
+    int front, rear, size, capacity;
+
+    public CircularQueue(int capacity) {
+        this.capacity = capacity;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+        size = 0;
+    }
+
+    // Add booking
+    public boolean enqueue(int seat) {
+        if (isFull()) {
+            System.out.println("Booking failed");
+            return false;
+        }
+        rear = (rear + 1) % capacity;
+        arr[rear] = seat;
+        size++;
+        System.out.println("Booked seat: " + seat);
+        return true;
+    }
+
+    // Cancel booking
+    public void dequeue() {
+        if (isEmpty()) {
+            System.out.println("No booking to cancel");
+            return;
+        }
+        int canceledSeat = arr[front];
+        front = (front + 1) % capacity;
+        size--;
+        System.out.println("Canceled seat: " + canceledSeat);
+    }
+
+    // View next seat
+    public void front() {
+        if (isEmpty()) {
+            System.out.println("No bookings");
+        } else {
+            System.out.println("Next seat to be canceled: " + arr[front]);
+        }
+    }
+
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}
+
+public class MovieTheatreReservation {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Read inputs
+        int capacity = sc.nextInt();  // number of seats
+        int operations = sc.nextInt(); // number of operations
+
+        CircularQueue cq = new CircularQueue(capacity);
+
+        for (int i = 0; i < operations; i++) {
+            String command = sc.next();
+
+            if (command.equals("enqueue")) {
+                int seat = sc.nextInt();
+                cq.enqueue(seat);
+            } else if (command.equals("dequeue")) {
+                cq.dequeue();
+            } else if (command.equals("front")) {
+                cq.front();
+            } else if (command.equals("isFull")) {
+                System.out.println(cq.isFull());
+            } else if (command.equals("isEmpty")) {
+                System.out.println(cq.isEmpty());
+            }
+        }
+
+        sc.close();
+    }
+}
+
