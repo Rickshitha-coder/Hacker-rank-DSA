@@ -1,0 +1,112 @@
+Date : 25/09/2025
+40. Queue - Daily Temperature Analysis
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    static class QueueWindow
+    {
+        int[] Queue;
+        int front,rear,size,capacity;
+        QueueWindow(int capacity)
+        {
+            this.capacity=capacity;
+            Queue = new int[capacity];
+            front=0;
+            rear=-1;
+            size=0;
+        }
+        
+        void addRear(int value)
+        {
+            rear=(rear+1)%capacity;
+            Queue[rear]=value;
+            size++;
+        }
+        
+        void removeRear()
+        {
+             rear=(rear-1)%capacity;
+          
+            size--;
+        }
+        
+        void removeFront()
+        {
+            front=front +1 %capacity;
+          
+            size--;
+        }
+        
+        int getFront()
+        {
+            return Queue[front];
+        }
+        
+        int getRear()
+        {
+            return Queue[rear];
+        }
+        
+        boolean isEmpty()
+        {
+            return size==0;
+        }
+    }
+    
+    
+    public static List<Integer>  getMaximum(int[] queue,int k)
+    {
+        int length=queue.length;
+        
+        List<Integer> result=new ArrayList<>();
+        QueueWindow qw=new QueueWindow(length);
+        
+        for(int i=0;i<length;i++)
+        {
+            //indices will be removed  --choose the 3 elements as first
+            if(!qw.isEmpty() && qw.getFront() <= i-k)
+            {
+                qw.removeFront();
+            }
+            
+            //find the maximum among it
+            while(!qw.isEmpty() && queue[qw.getRear()]<=queue[i])
+            {
+                qw.removeRear();
+            }
+                
+            qw.addRear(i);  //insert the max
+            
+            if(i>=k-1)
+            {
+                result.add(queue[qw.getFront()]);
+            }
+                
+        }
+        return result;
+    } //end of getamximum
+    
+    
+    
+    
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        
+        int N=sc.nextInt();
+        
+        int[] queue=new int[N];
+        for(int i=0;i<N;i++)
+        {
+            queue[i]=sc.nextInt();
+        }
+        int k=sc.nextInt();   //size of sliding window
+        
+        List<Integer>  maxQueue=getMaximum(queue,k);
+        
+        for(int m:maxQueue){
+            System.out.print(m+" ");
+        }
+    }
+}
