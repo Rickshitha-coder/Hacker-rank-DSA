@@ -1,0 +1,52 @@
+Date : 25/09/2025 HW
+41.Queue - Order Processing in a Warehouse
+
+import java.util.*;
+
+public class ReverseKQueue {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();  // number of items in queue
+        Queue<Integer> queue = new LinkedList<>();
+        
+        for (int i = 0; i < n; i++) {
+           int id=sc.nextInt();
+            queue.add(id);
+        }
+        
+        int k = sc.nextInt();  // number of elements to reverse
+
+        // Reverse first K elements
+        reverseFirstK(queue, k);
+
+        // Print result
+        for (int val : queue) {
+            System.out.print(val + " ");
+        }
+    }
+
+    public static void reverseFirstK(Queue<Integer> queue, int k) {
+        if (queue.isEmpty() || k <= 0 || k > queue.size()) {
+            return; // invalid case, do nothing
+        }
+
+        Stack<Integer> stack = new Stack<>();
+
+        // Step 1: Dequeue first K elements and push into stack
+        for (int i = 0; i < k; i++) {
+            stack.push(queue.remove());
+        }
+
+        // Step 2: Pop from stack and enqueue back
+        while (!stack.isEmpty()) {
+            queue.add(stack.pop());
+        }
+
+        // Step 3: Move the remaining (n-k) elements to back
+        int size = queue.size() - k;
+        for (int i = 0; i < size; i++) {
+            queue.add(queue.remove());
+        }
+    }
+}
