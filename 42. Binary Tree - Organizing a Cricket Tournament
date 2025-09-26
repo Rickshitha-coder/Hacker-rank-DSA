@@ -1,0 +1,98 @@
+Date : 26/09/2025
+42. Binary Tree - Organizing a Cricket Tournament
+
+import java.io.*;
+import java.util.*;
+//basic node structure for binary tree
+class Node{
+    int ranking;
+    Node left,right;
+    
+    Node(int ranking){
+        this.ranking=ranking;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+
+public class Solution {
+    
+    public static Node insertNode(Node root,int ranking)
+    {
+        if(root==null)
+        {
+            return new Node(ranking);   //very node create 
+        }
+        
+        if(ranking<root.ranking)  //if the number is less than the root number
+        {
+            root.left =insertNode(root.left,ranking);   //it store in root left tree
+        }
+         
+        else   //if greater than root means
+        {
+            root.right = insertNode(root.right,ranking); 
+        }
+        
+        return root;
+    } //end of insert
+    
+    //to find the hieght of tree
+    static int height(Node root)
+    {
+        if(root==null)  //there is no root means no values are there so hieght is 0
+        {
+            return 0;
+        }
+        return 1+Math.max(height(root.left),height(root.right));
+    } //end
+    
+    static void printLevel(Node root,int i)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        
+        if(i == 1)
+        {
+            System.out.print(root.ranking+ " ");
+        }
+        
+        if(i>1)
+        {
+            printLevel(root.left,i-1);
+            printLevel(root.right,i-1);
+        }
+    }
+    
+    public static void  levelOrder(Node root)
+    {
+        int h=height(root);   //height of tree root
+        
+        for(int i=1;i<=h;i++)
+        {
+            printLevel(root,i);  //method for print
+        }
+        
+    }//end of display levelorder 
+    
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        
+        Node root=null;
+        
+        for(int i=0;i<n;i++)
+        {
+            int ranking=sc.nextInt();
+            root = insertNode(root,ranking);
+        }//end of for
+        
+        levelOrder(root);
+
+    }
+}	
