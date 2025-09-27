@@ -1,0 +1,74 @@
+Date : 26-09-2025 hw
+43. Binary Tree - Tournament Ranking System in Cricket
+
+
+import java.util.*;
+
+class Node {
+    int val;
+    Node left, right;
+
+    Node(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class Solution {
+    
+    // Build tree from level order input
+    public static Node buildTree(String[] values) {
+        if (values.length == 0 || values[0].equals("null")) return null;
+
+        Node root = new Node(Integer.parseInt(values[0]));
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < values.length) {
+            Node curr = queue.poll();
+
+            // Left child
+            if (i < values.length && !values[i].equals("null")) {
+                curr.left = new Node(Integer.parseInt(values[i]));
+                queue.add(curr.left);
+            }
+            i++;
+
+            // Right child
+            if (i < values.length && !values[i].equals("null")) {
+                curr.right = new Node(Integer.parseInt(values[i]));
+                queue.add(curr.right);
+            }
+            i++;
+        }
+        return root;
+    }
+
+    // Inorder traversal
+    public static void inorder(Node root, List<Integer> result) {
+        if (root == null) return;
+        inorder(root.left, result);
+        result.add(root.val);
+        inorder(root.right, result);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = Integer.parseInt(sc.nextLine().trim()); // number of nodes
+        String[] values = sc.nextLine().trim().split(" ");
+
+        Node root = buildTree(values);
+        List<Integer> result = new ArrayList<>();
+        inorder(root, result);
+
+        // Print space-separated
+        for (int i = 0; i < result.size(); i++) {
+            System.out.print(result.get(i));
+            if (i < result.size() - 1) System.out.print(" ");
+        }
+    }
+}
+
