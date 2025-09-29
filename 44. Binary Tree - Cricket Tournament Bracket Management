@@ -1,0 +1,90 @@
+Date : 29/09/2025
+44. Binary Tree - Cricket Tournament Bracket Management
+
+import java.io.*;
+import java.util.*;
+
+class Node
+{
+    int data;
+    Node right,left;
+    
+    Node(int data)
+    {
+        this.data=data;
+        this.right=null;
+        this.left=null;
+    }
+}
+public class Solution {
+
+    static Node createTree(int[] arr)
+    {
+        if(arr.length==0 ||arr[0] ==-1)
+        {
+            return null;
+        }
+        
+        Node root=new Node(arr[0]);
+        Queue<Node> q=new LinkedList<>();
+        q.add(root);
+        
+        int i=1;  //index to track the current node
+        while(!q.isEmpty() && i< arr.length)
+        {
+            Node current=q.poll();  //removes the first node
+            if(arr[i] != -1)
+            {
+                current.left=new Node(arr[i]);
+                q.add(current.left);
+            }
+            i++;
+            if(i>=arr.length)
+            {
+                break;
+            }
+            
+            if(arr[i] != -1)
+            {
+                current.right=new Node (arr[i]);
+                q.add(current.right);
+            }
+            i++;
+        }//end of while
+        return root;
+    }//end of method
+    
+    
+        static void preOrder(Node root,List<Integer> pretree)
+        {
+            if(root ==null) {
+                return;
+            }
+            pretree.add(root.data);
+            preOrder(root.left,pretree);
+            preOrder(root.right,pretree);
+        }//end of preOrder
+    
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        String[] input = sc.nextLine().trim().split(" ");
+
+        int[] arr=new int[input.length];
+        
+        for(int i=0;i<input.length;i++)
+        {
+            arr[i]=Integer.parseInt(input[i]);
+        }
+        
+        Node root=createTree(arr);  //method call
+        
+        List<Integer> pretree = new ArrayList<>();
+        
+        preOrder(root,pretree);
+        
+        for(int i:pretree){
+            System.out.print(i+" ");
+        }
+    }
+}
