@@ -1,0 +1,52 @@
+Date : 29-09-2025 HW
+45. Binary Tree - Library Book Collection Tracker
+
+
+import java.util.*;
+
+class Node{
+    int book;
+    Node left,right;
+    
+    Node(int book)
+    {
+        this.book=book;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+public class Solution{
+
+    static Node insertNode(Node root,int ranking)
+    {
+        if(root==null)
+            return new Node(ranking);
+        if(ranking<root.book)
+        {
+            root.left=insertNode(root.left,ranking);
+        }
+        else
+        {
+            root.right=insertNode(root.right,ranking);
+        }
+        return root;
+    }//end
+    
+     static int countNodes(Node root) {
+        if (root == null) return 0;
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<n;i++)
+        {
+            int ranking=sc.nextInt();
+            root=insertNode(root,ranking);
+        }
+         System.out.println(countNodes(root));
+    }
+}
