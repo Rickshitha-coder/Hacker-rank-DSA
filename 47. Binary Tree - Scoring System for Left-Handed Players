@@ -1,0 +1,79 @@
+Date : 30/09/2025 HW
+47. Binary Tree - Scoring System for Left-Handed Players
+
+import java.io.*;
+import java.util.*;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class Solution {
+
+    // Build tree from level-order
+    static Node buildTree(String[] values) {
+        if (values.length == 0 || values[0].equals("null")) {
+            return null;
+        }
+
+        Node root = new Node(Integer.parseInt(values[0]));
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+
+        int i = 1; // index in values
+        while (!q.isEmpty() && i < values.length) {
+            Node curr = q.poll();
+
+            // left child
+            if (i < values.length && !values[i].equals("null")) {
+                curr.left = new Node(Integer.parseInt(values[i]));
+                q.add(curr.left);
+            }
+            i++;
+
+            // right child
+            if (i < values.length && !values[i].equals("null")) {
+                curr.right = new Node(Integer.parseInt(values[i]));
+                q.add(curr.right);
+            }
+            i++;
+        }
+        return root;
+    }
+
+    // Function to check if node is leaf
+    static boolean isLeaf(Node node) {
+        return node != null && node.left == null && node.right == null;
+    }
+
+    // Function to calculate sum of left leaves
+    static int sumLeftLeaves(Node root) {
+        if (root == null) return 0;
+        int sum = 0;
+
+        if (isLeaf(root.left)) {
+            sum += root.left.data; // left leaf found
+        } else {
+            sum += sumLeftLeaves(root.left); // go deeper
+        }
+
+        sum += sumLeftLeaves(root.right); // right subtree
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = Integer.parseInt(sc.nextLine().trim());
+        String[] values = sc.nextLine().trim().split(" ");
+
+        Node root = buildTree(values);
+        System.out.println(sumLeftLeaves(root));
+    }
+}
