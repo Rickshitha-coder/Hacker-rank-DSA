@@ -1,0 +1,118 @@
+Date :03/12/2025
+53.Binary Tree - Observing Strategy Patterns
+
+
+import java.util.*;
+
+class Node
+{
+    int data;
+    Node left,right;
+    
+    Node(int data)
+    {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class CricketTeam 
+{
+    static Node buildTree(int[] arr)
+    {
+        if(arr.length == 0)//if the array is empty
+            return null;
+        
+        Node root = new Node(arr[0]);//first data of array is the root element
+        
+        Queue<Node> q = new LinkedList<>();
+        
+        q.add(root);
+        
+        int i = 1;
+        
+        while(i < arr.length)
+        {
+            Node current = q.poll();//pick the element to decide it to push to right or left
+            
+            if(i < arr.length)//to insert the node in the left
+            {
+                current.left = new Node(arr[i]);
+                i++;
+                q.add(current.left);
+            }
+            
+            if(i < arr.length)//to insert the node in the right 
+            {
+                current.right = new Node(arr[i]);
+                i++;
+                q.add(current.right);
+            }
+        }
+        
+        return root;
+    }
+    
+    static void zigzagTraverse(Node root)
+    {
+        if(root == null)
+            return;
+        
+        Queue<Node> q = new LinkedList<>();
+        
+        q.add(root);
+        
+        boolean lefttoright = true;
+        
+        while(!q.isEmpty())
+        {
+            int size = q.size();
+            
+            List<Integer> list = new ArrayList<>();//create a list
+            
+            for(int i=0;i<size;i++)
+            {
+                Node node = q.poll();
+                
+                list.add(node.data);
+                
+                if(node.left != null)
+                    q.add(node.left);
+                
+                if(node.right != null)
+                    q.add(node.right);
+            }
+            
+            if(!lefttoright)
+                Collections.reverse(list);
+            
+            for(int val:list)
+            {
+                System.out.print(val+" ");
+            }
+            System.out.println();
+            
+             lefttoright = !lefttoright;
+        }
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        int[] arr = new int[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i] = sc.nextInt();
+        }
+        
+        Node root = buildTree(arr);//build a binary tree
+        
+        zigzagTraverse(root);
+    }
+}
+
