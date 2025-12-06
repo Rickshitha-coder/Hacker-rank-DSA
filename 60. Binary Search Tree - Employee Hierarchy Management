@@ -1,0 +1,77 @@
+Date : 06/12/2025
+60. Binary Search Tree - Employee Hierarchy Management
+
+import java.io.*;
+import java.util.*;
+class Node{
+    int value;
+    Node right,left;
+    
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution {
+    
+    static Node insert(Node root,int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.value)
+        {
+            root.left=insert(root.left,value);
+        }
+        else
+        {
+            root.right=insert(root.right,value);
+        }
+        return root;
+    }
+
+    static Node Hireachy(Node root,int emp1,int emp2)
+    {
+        
+    while (root != null) {
+
+       
+        if (emp1 < root.value && emp2 < root.value) {
+            root = root.left;
+        }
+       
+        else if (emp1 > root.value && emp2 > root.value) {
+            root = root.right;
+        }
+        else {
+            
+            return root;
+        }
+    }
+    return null;
+}
+
+        
+       
+    
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        Node root=null;
+        
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            root=insert(root,value);
+        }
+        int emp1=sc.nextInt();
+        int emp2=sc.nextInt();
+        Node ans=Hireachy(root,emp1,emp2);
+        if(ans!=null){
+        System.out.print(ans.value);
+        }
+    }
+}
