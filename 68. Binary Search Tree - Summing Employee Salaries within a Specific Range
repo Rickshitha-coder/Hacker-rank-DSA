@@ -1,0 +1,72 @@
+Date :10/12/2025
+68. Binary Search Tree - Summing Employee Salaries within a Specific Range
+
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int value;
+    Node left,right;
+    
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution {
+    
+    static Node insert(Node root, int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.value)
+        {
+            root.left=insert(root.left,value);
+        }
+        else
+        {
+            root.right=insert(root.right,value);
+        }
+        return root;
+    }
+    static int range(Node root,int low,int high)  //50000, 40000, 60000
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        int sum=0; //40000
+        
+        if(root.value>=low && root.value <= high)  //50000>=40000 &&  50000 <= 60000
+        {
+            sum+=root.value;
+        }
+        if(root.value > low)  //50000 > 40000     40000>40000
+        {
+            sum+=range(root.left,low,high);  //40000,40000,60000
+        }
+        if(root.value<high) //40000<60000 
+        {
+            sum+=range(root.right,low,high);   //45000,40000,60000
+        }
+        return sum;
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            root=insert(root,value);
+        }
+        int low=sc.nextInt();  //40000
+        int high=sc.nextInt();  //60000
+        
+        System.out.println(range(root,low,high));
+    }
+}
