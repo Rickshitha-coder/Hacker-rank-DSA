@@ -1,0 +1,59 @@
+Date : 11/12/2025
+69. Binary Search Tree - Leaf Node Analysis
+
+
+import java.io.*;
+import java.util.*;
+class Node{
+    int value;
+    Node left,right;
+    
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution {
+    
+    static Node insert(Node root,int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.value)
+        {
+            root.left=insert(root.left,value);
+        }
+        else
+        {
+            root.right=insert(root.right,value);
+        }
+        return root;
+    }
+    
+    static int countleaf(Node root)
+    {
+        if(root==null) return 0;
+        
+        if(root.left==null && root.right==null)
+            return 1;
+        
+        return countleaf(root.left)+countleaf(root.right);
+    }
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            root=insert(root,value);
+        }
+        System.out.print(countleaf(root));
+    }
+} 
+
