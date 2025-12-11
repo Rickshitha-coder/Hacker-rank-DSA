@@ -1,0 +1,34 @@
+Date : 11/12/2025
+70. Graph - City Transport Network
+
+
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt(); // number of cities  //3
+        int m = sc.nextInt(); // number of routes  //3
+        
+        int[][] adj = new int[n][n]; // adjacency matrix   //3*3
+        
+        for (int i = 0; i < m; i++) {
+            int u = sc.nextInt();  //1  2  3
+            int v = sc.nextInt();   //2  3  1
+            
+            // Convert to 0-based indexing
+            //adj[1-1][2-1]=1   [2-1][3-1]=1  [3-1][1-1]=1
+            adj[u - 1][v - 1] = 1;  //0,1=1    1,2=1   2,0=1
+        }
+        
+      
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(adj[i][j] + " ");
+            }
+            System.out.println();
+        }
+       
+    }
+}
