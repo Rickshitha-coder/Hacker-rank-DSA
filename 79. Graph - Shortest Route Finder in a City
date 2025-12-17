@@ -1,0 +1,71 @@
+
+Date : 17/12/2025 hW
+79. Graph - Shortest Route Finder in a City
+
+
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int q = sc.nextInt();   // number of queries   1
+
+        while (q-- > 0) {
+
+            int n = sc.nextInt(); // number of nodes  3   --- 1,2,3
+            int m = sc.nextInt(); // number of edges  1
+
+            // Adjacency list
+            List<List<Integer>> adj = new ArrayList<>();
+            for (int i = 0; i <= n; i++) {
+                adj.add(new ArrayList<>());
+            }
+
+            // Read edges
+            for (int i = 0; i < m; i++) {
+                int u = sc.nextInt();  //u=  2
+                int v = sc.nextInt();  //v=3
+                adj.get(u).add(v);//2-3
+                adj.get(v).add(u); // undirected graph  3-2
+            }
+
+            int s = sc.nextInt(); // starting node  2
+
+            // Distance array
+            int[] dist = new int[n + 1];
+            Arrays.fill(dist, -1);     // Fill all distances with -1 (means unreachable)
+
+            // BFS
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(s);
+            dist[s] = 0;  // dist[2] = 0 (starting point)  
+
+            while (!queue.isEmpty()) {  //2 3
+                int curr = queue.poll();      // First curr = 2   //curr=3
+
+                for (int nbr : adj.get(curr)) {   // From node 2, neighbor is node 3  agj.get[2]-3   adj.get[3]=2 alr4eady visited
+                    if (dist[nbr] == -1) {   // not visited  nbr=3
+                        dist[nbr] = dist[curr] + 6;     // dist[3] = dist[2] + 6 = 6
+                        queue.add(nbr);  //queue.add(3)
+                    }
+                }
+            }
+
+            // Print result (skip starting node)  i<=3
+            for (int i = 1; i <= n; i++) {  //i = 1 → i = 2 → i = 3
+                if (i != s) { //i = 1  1 not equal 2  print  i=2=2 skip  i=3 not euqal 2
+                    System.out.print(dist[i] + " ");  //-1  6
+                }
+            }
+            System.out.println();
+        }
+
+    
+    }
+} 
+
+
+
+ 
