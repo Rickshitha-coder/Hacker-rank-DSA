@@ -8,37 +8,47 @@ import java.util.*;
 public class Solution {
 
     public static void main(String[] args) {
-    Scanner sc=new Scanner(System.in);
-        
-        int m=sc.nextInt();
-        int n=sc.nextInt();
-        HashSet<Integer> set=new HashSet<>();
-        for(int i=0;i<m;i++)
-        {
-            int id=sc.nextInt();
-            set.add(id);
+
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt(); // inventory size
+        int n = sc.nextInt(); // order size
+
+        int[] inventory = new int[m];
+        int[] order = new int[n];
+
+        // Read inventory array
+        for (int i = 0; i < m; i++) {
+            inventory[i] = sc.nextInt();
         }
-        
-        boolean issubset=true;
-        
-        for(int i=0;i<n;i++)
-        {
-            int product=sc.nextInt();
-            if(!set.contains(product))
-            {
-                issubset=false;
+
+        // Read order array
+        for (int i = 0; i < n; i++) {
+            order[i] = sc.nextInt();
+        }
+
+        // Use HashSet for inventory
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            set.add(inventory[i]);
+        }
+
+        boolean isSubset = true;
+
+        // Check if order is subset of inventory
+        for (int i = 0; i < n; i++) {
+            if (!set.contains(order[i])) {
+                isSubset = false;
                 break;
-                
             }
         }
-        
-        if(issubset)
-        {
-            System.out.print("Yes");
+
+        if (isSubset) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
         }
-        else
-        {
-            System.out.print("No");
-        }
+
+      
     }
 }
