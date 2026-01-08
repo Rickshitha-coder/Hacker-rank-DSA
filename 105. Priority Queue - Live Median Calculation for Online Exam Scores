@@ -1,0 +1,59 @@
+Date :08/01/2026
+105. Priority Queue - Live Median Calculation for Online Exam Scores
+
+import java.util.*;
+public class Solution
+{
+    public static void main(String[] args)
+    {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        PriorityQueue<Integer> minHeap= new PriorityQueue<>();
+        PriorityQueue<Integer> maxHeap=new PriorityQueue<>(Collections.reverseOrder());
+        
+        int n=sc.nextInt();
+        /*
+        4 
+2 2 2 2 
+*/
+        for(int i=0;i<n;i++)//0  1  2  3
+        {
+            int score=sc.nextInt(); //2  2 2 2
+            
+            
+            if(maxHeap.isEmpty() || score < maxHeap.peek())//peek-first element //2   2  2  2
+            {
+                maxHeap.add(score); //2 
+            }
+            else
+            {
+                minHeap.add(score);  //2 //2  2
+            }
+            
+            if(maxHeap.size() > minHeap.size()+1) //1 >0+1  //1 > 1+1  //1> 2+1  //2 > 3
+            {
+                minHeap.add(maxHeap.poll());
+            }
+            else if (minHeap.size() > maxHeap.size()) //0> 1  //1 > 1  2 >1  2>2
+            {
+                maxHeap.add(minHeap.poll());//maxHeap.add(2) [2,2] 
+            }
+            
+            double median=0.0F;
+            
+            if(maxHeap.size() == minHeap.size()) // 1 ==0  //1==1  //2==1 //2==2
+            {
+                median=(minHeap.peek() + maxHeap.peek())/2.0;  //(2+2)=2 --2  //(2+2)/2
+            }
+            else
+            {
+                median= maxHeap.peek();  //2  //2  
+            }
+            System.out.printf("%.2f ",median); //2.00 //2.00  //2.00 //2.00
+            
+            
+            
+        }
+    }
+}
