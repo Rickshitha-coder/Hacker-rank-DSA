@@ -1,0 +1,29 @@
+2. Mathematical Algorithms - The Great Divider
+
+import java.io.*;
+import java.util.*;
+public class Solution {
+    /*
+    4
+7 14 21 28
+*/  
+    static int gcd(int result,int num) //7  14 || 14 7 || 7  0  //7  21 ||21 7 || 7 0
+    {
+       if(num==0)//14==0  7==0 0==0 //0==0
+           return result;//7  //7
+        return gcd(num,result%num);//(14 , 7%14--7)  || 7, 14%7-0 //21, 7%21=7 //7, 21%7=0
+    }
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+        int no_stones=sc.nextInt();//4 -- 7 14 21 28
+        int result = sc.nextInt();//7
+        for(int i=1;i<no_stones;i++)//1  2
+        {
+            int num=sc.nextInt();//14  21
+            
+            result=gcd(result,num);//gcd(7,14) //gcd(7,21)
+            
+        }
+        System.out.println(result);//7
+    }
+}
