@@ -1,0 +1,21 @@
+
+Date : 05/02/2026
+6. Mathematical Algorithms - Trailing Zeros in Factorial Count
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long n = sc.nextLong();   // n can be up to 10^9
+
+        long count = 0;
+        long div = 5;
+
+        while (n / div > 0) {
+            count += n / div;
+            div *= 5;
+        }
+
+        System.out.println(count);
+    }
+}
