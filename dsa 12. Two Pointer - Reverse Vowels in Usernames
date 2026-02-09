@@ -1,0 +1,48 @@
+Date :09/02/2026
+12. Two Pointer - Reverse Vowels in Usernames
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    public static String reversedVowel(String s)
+    {
+        String vowels="aeiouAEIOU";
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(char c:s.toCharArray())
+        {
+            if(vowels.indexOf(c)!= -1) //push the vowel inside the stack  //IcecreAm
+            {
+                stack.push(c);  //['I,'e','e','A']
+            }
+                
+        }
+        
+        StringBuilder replaced= new StringBuilder(); //stringbuilder have appended method
+        
+        for(char c:s.toCharArray())  //IcecreAm  ['I,'e','e','A']
+        {
+            if(vowels.indexOf(c) != -1)
+            {
+                replaced.append(stack.pop()); //A  Ac  ||e  Ace ||e Acecre ||I AcecreI ||
+            } 
+            else
+            {
+                replaced.append(c);//Ac  //Ace  //Acec //acecr //acecre //acecrei  //AceCreIm
+            }
+        }
+        return replaced.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        String Original=sc.nextLine();
+        
+        String alteredString= reversedVowel(Original);
+        System.out.println(alteredString);
+    }
+}
