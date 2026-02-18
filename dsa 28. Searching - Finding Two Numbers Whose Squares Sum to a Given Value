@@ -1,0 +1,38 @@
+Date:18/02/2026HW
+28. Searching - Finding Two Numbers Whose Squares Sum to a Given Value
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        int s=sc.nextInt();//5
+        
+        long left=0; //1
+        long right=(long)Math.sqrt(s); //math.sqrt(5)=2.23 -2
+        
+        while(left<=right) //0<=2 1<=2
+        {
+            long sum=left*left + right*right;//0*0 + 2*2 =4 //1*1 + 2*2=1+4=5
+            
+            if (sum==s) //4==5  5==5
+            {
+                System.out.print("true"); //true
+                return;
+            }
+            else if(sum < s) //4 <5
+            {
+                left++; //0++= 1
+            }
+            else
+            {
+                right--;
+            }
+        }
+         System.out.println("false");   
+    }
+}
