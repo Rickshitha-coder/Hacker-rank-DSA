@@ -1,0 +1,47 @@
+Date: 18/02/2026
+27. Searching - Finding the Highest Mountain Peak in a Terrain Map
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    static int findIndex(int[] arr)
+    {
+        int low=0;
+        int high=arr.length-1;
+        
+        while(low< high)
+        {
+            int mid=(low+high)/2;
+            
+            if(arr[mid]< arr[mid+1])
+            {
+                low=mid+1;
+            }
+            else
+            {
+                high=mid;
+            }
+        }
+        return low;
+    }
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        
+        int[] arr=new int[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        
+        int peak=findIndex(arr);
+        
+    System.out.print(peak);
+    }
+}
