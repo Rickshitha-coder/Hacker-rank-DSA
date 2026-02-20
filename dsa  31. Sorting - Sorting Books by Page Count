@@ -1,0 +1,42 @@
+Date : 20/02/2026
+31. Sorting - Sorting Books by Page Count
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt(); //5
+        int[] arr=new int[n];
+        //45 12 89 34 22
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        
+        //45 12 89 34 22
+        // 0  1  2  3 4
+        
+        for(int i=0;i<n-1;i++) //0 1 2 3
+        {
+            for(int j=0;j<n-1;j++)//0 1 2 3 //0 1 2  3 //0 1 2 3 //0 1 2 3
+            {
+                if(arr[j] > arr[j+1]) //45 > 12 45>89 89>34 89>22 ||12 > 45  45>34  45>22 45>89 ||12>34 34>22  34>45  45>89 //12>22 22>34 34>45 45>89
+                {
+                    int temp=arr[j];//int temp=45 int temp=89 int temp=89  int temp=45 int t=45 int t=34
+                    arr[j]=arr[j+1];//arr[0]=12   arr[2]=34   arr[3]=22    arr[1]=34  arr[2]=22 arr[1]=22
+                    arr[j+1]=temp;//arr[1]=45     arr[3]=89   arr[4]=89    arr[2]=45  arr[3]=45 arr[2]=34
+                }
+            }//arr=[12,45,89,34,22]  //arr=[12,45,34,89,22]  //arr[12,45,34,22,89] //arr=[12,34,45,22,89]  //arr=[12,34,22,45,89]  //arr=[12,22,34,45,89]
+        }
+       for(int i=0;i<n;i++)
+       {
+            System.out.print(arr[i]+" ");//12 22 34 45 89
+       }
+    }
+}
