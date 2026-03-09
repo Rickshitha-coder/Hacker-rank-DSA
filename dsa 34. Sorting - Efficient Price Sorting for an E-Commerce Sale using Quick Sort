@@ -1,0 +1,67 @@
+Date: 09/03/2026
+34. Sorting - Efficient Price Sorting for an E-Commerce Sale using Quick Sort
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    //499 299 999 199 799 399
+    public static  void  quicksort(int[] arr,int low,int high)//arr,0,5 //arr,0,1
+    {
+        if(low<high)//0<5
+        {
+            int pi=partition(arr,low,high);//(arr,0,5) pi=2 //(arr,0,1) pi=-1
+            
+            quicksort(arr,low,pi-1); //arr,0,1 //arr(,0,)
+            quicksort(arr,pi+1,high);//arr,3,5
+        }
+    }
+    
+    public static int partition(int[] arr,int low,int high)//arr,0,5 //arr,0,1
+    {
+        int pivot=arr[high];//arr[5]=399 //arr[1]=199
+        int i=low-1;//-1 //-1
+        
+        for(int j=low;j<high;j++)//j=0;j<5;j++ 0 1 2  3 4 5--failed //0 1--failed
+        {
+            if(arr[j] <= pivot)//arr[0]<=399 499<=399 ||299<=399 ||999<=399 ||199<=399 ||799<=399 //299<=199
+            {
+                i++;//0 1 
+                
+            int temp=arr[i];//temp=499  temp=499
+            arr[i]=arr[j];//arr[0]=299  arr[1]=arr[3]199
+            arr[j]=temp;//arr[1]=499    arr[3]=499
+                
+                // 299 499 999 199 799 399 //299 199 999 499 799 399
+            }  
+        }
+        
+        //299 199 999 499 799 399
+        int temp=arr[i+1]; //temp=arr[1+1] 999  //temp=arr[0] 299 
+        arr[i+1]=arr[high]; //arr[1+1]=399     //arr[0]=199
+        arr[high]=temp;   //arr[5]=999         //arr[1]=299   
+        //299 199 399 499 799 999   //199 299 399 499 799 999
+        return i+1;//i+1 =1+1 =2 --399 //0+1=1
+    }
+
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();//6
+        
+        int[] arr=new int[n]; //499 299 999 199 799 399
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        quicksort(arr,0,n-1);
+        
+        for(int i=0;i<n;i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+    }
+}
