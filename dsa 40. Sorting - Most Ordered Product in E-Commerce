@@ -1,0 +1,40 @@
+Date : 14/03/2026
+40. Sorting - Most Ordered Product in E-Commerce
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        int[] arr=new int[n];
+        int candidate=arr[0];
+        int count=0; //1  0
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();//3 2 3  //2 2 1 1 1 2 2
+            
+            if(count==0)//count=0  //0 0
+            {
+                candidate = arr[i];//3 = 3  //3 ==3||   //2==2  can=1  car=2
+            }
+            if(arr[i]==candidate) //3 ==3 2==3- fail   3==3   || //2==2 2==2  1==2 fail 1==2  1==1  2==1 2==2
+            {
+                count++;//1 1  || //1 2  1 2
+            }
+            else
+            {
+                count--; //0  || //1  0 0
+            }
+            
+        }
+        System.out.print(candidate);//3 2
+
+    }
+}
