@@ -1,0 +1,106 @@
+Date : 13/03/2026 HW
+39. Sorting - Median Sales Price of Two Product Lists
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt(); // m = 2
+        int[] prices1 = new int[m];
+
+        for(int i = 0; i < m; i++){
+            prices1[i] = sc.nextInt(); 
+            // i=0 - prices1[0] = 1
+            // i=1 - prices1[1] = 3
+            // prices1 = [1,3]
+        }
+
+        int n = sc.nextInt(); // n = 1
+        int[] prices2 = new int[n];
+
+        for(int i = 0; i < n; i++){
+            prices2[i] = sc.nextInt();
+            // i=0 - prices2[0] = 2
+            // prices2 = [2]
+        }
+
+        int[] merged = new int[m + n]; 
+        // merged size = 2+1 = 3
+        // merged = [_,_,_]
+
+        int i = 0, j = 0, k = 0;
+
+        while(i < m && j < n){ 
+        // 0 < 2 && 0 < 1 true
+
+            if(prices1[i] <= prices2[j]){ 
+            // prices1[0] = 1
+            // prices2[0] = 2
+            // 1 <= 2  true
+
+                merged[k++] = prices1[i++]; 
+                // merged[0] = 1
+                // i = 1
+                // k = 1
+                // merged = [1,_,_]
+            } 
+            else {
+                merged[k++] = prices2[j++];
+            }
+        }
+
+        // Next iteration
+        // i=1 < 2 true
+        // j=0 < 1 true
+
+        // prices1[1] = 3
+        // prices2[0] = 2
+        // 3 <= 2  false
+
+        // merged[1] = 2
+        // j = 1
+        // k = 2
+        // merged = [1,2,_]
+
+        // Next check
+        // i < m (1<2 true)
+        // j < n (1<1 false)
+        // loop stops
+
+        while(i < m){
+            merged[k++] = prices1[i++];
+            // merged[2] = 3
+            // i = 2
+            // k = 3
+            // merged = [1,2,3]
+        }
+
+        while(j < n){
+            merged[k++] = prices2[j++];
+            // not executed because j=1 and n=1
+        }
+
+        int total = m + n; 
+        // total = 3
+
+        double median;
+
+        if(total % 2 == 1){
+            median = merged[total/2];
+            // total/2 = 3/2 = 1
+            // merged[1] = 2
+            // median = 2
+        } 
+        else {
+            median = (merged[total/2 - 1] + merged[total/2]) / 2.0;
+        }
+
+        System.out.printf("%.5f", median);
+        // Output  2.00000
+    }
+}
