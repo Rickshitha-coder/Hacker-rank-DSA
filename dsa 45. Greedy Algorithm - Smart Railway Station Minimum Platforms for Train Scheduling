@@ -1,0 +1,66 @@
+Date : 16/03/2026 HW
+
+45. Greedy Algorithm - Smart Railway Station Minimum Platforms for Train Scheduling
+
+
+import java.io.*;
+
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int[] arrival = new int[n];
+
+        int[] departure = new int[n];
+
+        for(int i = 0; i < n; i++){
+
+            int a = sc.nextInt();
+
+            int b = sc.nextInt();
+
+            arrival[i] = a;
+
+            departure[i] = a + b;
+
+        }
+
+        Arrays.sort(arrival);
+
+        Arrays.sort(departure);
+
+        int i = 0, j = 0;
+
+        int platforms = 0, maxPlatforms = 0;
+
+        while(i < n && j < n){
+
+            if(arrival[i] <= departure[j]){
+
+                platforms++;
+
+                maxPlatforms = Math.max(maxPlatforms, platforms);
+
+                i++;
+
+            } else {
+
+                platforms--;
+
+                j++;
+
+            }
+
+        }
+
+        System.out.println(maxPlatforms);
+
+    }
+
+}
