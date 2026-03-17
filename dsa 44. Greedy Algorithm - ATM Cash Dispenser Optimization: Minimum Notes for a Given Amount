@@ -1,0 +1,58 @@
+Date : 16.03.2026
+44. Greedy Algorithm - ATM Cash Dispenser Optimization: Minimum Notes for a Given Amount
+
+
+import java.util.*;
+
+public class ATM 
+
+{
+
+    public static void main(String[] args) 
+
+    {
+
+        Scanner sc = new Scanner(System.in);
+
+        int amount = sc.nextInt();
+
+        if (amount <= 0) 
+
+        {
+
+            System.out.println("Amount should be greater than 0");
+
+            return;
+
+        }
+
+        int[] notes = {2000, 500, 200, 100, 50, 20, 10, 5, 2, 1};
+
+        int totalNotes = 0;
+
+        for (int note : notes) 
+
+        {
+
+            int count = amount / note;
+
+            if (count > 0) 
+
+            {
+
+                System.out.println(note + " : " + count);
+
+                totalNotes += count;
+
+                amount = amount % note;
+
+            }
+
+        }
+
+        System.out.println(totalNotes);
+
+    }
+
+}
+
