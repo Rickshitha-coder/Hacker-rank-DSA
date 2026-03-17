@@ -1,0 +1,69 @@
+Date: 14/03/2026 HW
+42. Greedy Algorithm - Freelancer Task Scheduler: Maximizing Profit with Deadlines
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static class job {
+        String id;
+        int profit;
+        int deadline;
+
+        job(String id, int p, int d) {
+            this.id = id;
+            this.profit = p;
+            this.deadline = d;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        job[] arr = new job[n];
+
+        for(int i = 0; i < n; i++) {
+
+            String id = sc.next();
+            int deadline = sc.nextInt();
+            int profit = sc.nextInt();
+
+            arr[i] = new job(id, profit, deadline);
+        }
+
+        // sort by profit descending
+        Arrays.sort(arr, (a,b) -> b.profit - a.profit);
+
+        int maxdead = 0;
+
+        for(job j : arr) {
+            maxdead = Math.max(maxdead, j.deadline);
+        }
+
+        boolean[] slot = new boolean[maxdead + 1];
+
+        int count = 0;
+        int totprofit = 0;
+
+        for(job j : arr) {
+
+            for(int d = j.deadline; d > 0; d--) {
+
+                if(!slot[d]) {
+                    slot[d] = true;
+                    count++;
+                    totprofit += j.profit;
+                    break;
+                }
+
+            }
+        }
+
+        System.out.println(count + " " + totprofit);
+    }
+}
