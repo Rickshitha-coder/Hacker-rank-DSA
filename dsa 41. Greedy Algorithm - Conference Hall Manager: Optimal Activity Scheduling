@@ -1,0 +1,50 @@
+Date: 14/03/2026
+41. Greedy Algorithm - Conference Hall Manager: Optimal Activity Scheduling
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static class activity
+    {
+        int start,end;
+        
+        activity(int s,int e)
+        {
+            start=s;
+            end=e;
+        }
+    }
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        
+        activity[] arr=new activity[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            int start=sc.nextInt();
+            int end=sc.nextInt();
+            arr[i]=new activity(start,end);
+        }
+        
+        Arrays.sort(arr,Comparator.comparingInt(a->a.end));
+        int lastend=0;
+        int count=0;
+        
+        for(activity a:arr)
+        {
+            if(a.start >=lastend)
+            {
+                count++;
+                lastend=a.end;
+            }
+        }
+        System.out.print(count);
+    
+    }
+}
