@@ -1,0 +1,37 @@
+Date : 17/03/2026
+46. Greedy Algorithm - Maximize Number by Swapping Two Digits Once
+
+import java.util.*;
+
+public class SwapNumbers {
+    public static int maximumSwap(int num) {
+        char[] digits = Integer.toString(num).toCharArray();
+        int length = digits.length;
+
+        for (int i = 0; i < length - 1; i++) {
+            int maxIndex = i;
+
+            for (int j = i + 1; j < length; j++) {
+                if (digits[j] >= digits[maxIndex]) {
+                    maxIndex = j;
+                }
+            }
+
+            if (digits[maxIndex] != digits[i]) {
+                char temp = digits[i];
+                digits[i] = digits[maxIndex];
+                digits[maxIndex] = temp;
+                return Integer.parseInt(new String(digits));
+            }
+        }
+
+        return num;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        System.out.println(maximumSwap(num));
+    }
+
+}
