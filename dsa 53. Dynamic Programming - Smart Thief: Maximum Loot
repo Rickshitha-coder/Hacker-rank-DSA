@@ -1,0 +1,56 @@
+
+Date :27/03/2026
+53. Dynamic Programming - Smart Thief: Maximum Loot
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n= sc.nextInt();
+        
+        int[] arr=new int[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        
+        if(n==0)
+        {
+            System.out.println(0);
+            return;
+        }
+        
+        if(n==1)
+        {
+            System.out.println(arr[0]);
+            return;
+        }
+        /*5
+        5 3 4 11 2
+        0 1 2  3 4 
+*/
+        int prev2=0;//0 || 5 ||5 ||9
+        int prev1=arr[0];//5 ||5  ||9 ||16
+        
+        for(int i=1;i<n;i++)//1<5 2<5 3<5 4<5 5<5--fail
+        {
+            int take= prev2 + arr[i];//take=0+3=3 ||take=5+4 =9 ||Take=5 +11 =16 ||take=9+2=11
+            int skip=prev1;//5 //5 //9 //16
+            
+            int curr=Math.max(take, skip);//Math.max(3,5) = 5  //Math.max(9,5)=9 //Math.max(16,9) =16 //Math.max(11,16)=16
+             
+            prev2=prev1; //5 //5 //9 //16
+            prev1=curr; //5  //9 //16 //16
+        }
+        
+        System.out.println(prev1);//16
+
+    }
+}
