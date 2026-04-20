@@ -1,0 +1,52 @@
+import java.util.*;
+
+public class VendingMachine
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        int amount = sc.nextInt();
+        
+        int[] coins = new int[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            coins[i] = sc.nextInt();
+        }
+        
+        int minCoins = minCoinsRequired(coins,amount);
+        
+        System.out.println(minCoins);
+    }
+    
+    static int minCoinsRequired(int[] coins,int amount)
+    {
+        int Max = amount + 1;
+        
+        int[] mCoins = new int[Max];
+        
+        Arrays.fill(mCoins,Max);
+        
+        mCoins[0] = 0;
+        //0 1 0 0 12 12 12 12 12 12 12 12
+        
+        for(int curAmount = 1;curAmount <= amount;curAmount++)//curAmount = 1//curAmount = 2//curAmount = 3
+            //curAmount = 4
+        {
+            for(int coin:coins)//1 2 5
+            {
+                if(curAmount - coin >= 0)//1 - 1 = 0//1 - 2 >= 0--skip//2 - 1 >=0//2 - 2 >= 0//3>=0
+                {
+                    mCoins[curAmount] = Math.min(mCoins[curAmount],mCoins[curAmount - coin]+1);
+                    //mCoins[1] = min(1,0+1) = 1//mCoins[2] = min(12,1) = 1
+                    //mCoins[2]= min(12,0) = 0//minCoins[3] =min(12,0)=0//mCoins[3]=min(0,1)=0
+                    //mCoins[4]=min(12,0)=0 //mCoins[4]=(0,1)=0
+                }
+            }
+        }
+        return (mCoins[amount] == Max) ? -1 : mCoins[amount];
+    }
+}
