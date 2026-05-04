@@ -1,0 +1,61 @@
+import java.util.*;
+
+class Job {
+    int start, end, profit;
+
+    Job(int s, int e, int p) {
+        start = s;
+        end = e;
+        profit = p;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Sample Input:
+        // 4
+        // 1 2 50
+        // 3 5 20
+        // 6 19 100
+        // 2 100 200
+
+        int n = sc.nextInt();
+
+        Job[] jobs = new Job[n];
+
+        for (int i = 0; i < n; i++) {
+            int s = sc.nextInt();
+            int e = sc.nextInt();
+            int p = sc.nextInt();
+            jobs[i] = new Job(s, e, p);
+        }
+
+        //  Sort jobs by end time
+        Arrays.sort(jobs, (a, b) -> a.end - b.end);
+
+        // DP array
+        int[] dp = new int[n];
+        dp[0] = jobs[0].profit;
+
+        //Fill DP
+        for (int i = 1; i < n; i++) {
+
+            int includeProfit = jobs[i].profit;
+
+            // Find last non-overlapping job
+            for (int j = i - 1; j >= 0; j--) {
+                if (jobs[j].end <= jobs[i].start) {
+                    includeProfit += dp[j];
+                    break;
+                }
+            }
+
+            dp[i] = Math.max(dp[i - 1], includeProfit);
+        }
+
+        System.out.println(dp[n - 1]);
+    }
+}
