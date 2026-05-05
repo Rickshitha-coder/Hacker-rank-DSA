@@ -1,0 +1,32 @@
+Date : 05/05/2026
+70. Dynamic Programming - Egg Drop Puzzle – Find the Minimum Number of Trials
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt(); // eggs
+        int k = sc.nextInt(); // floors
+
+        int[][] dp = new int[k + 1][n + 1];
+
+        int moves = 0;
+
+        // keep increasing moves until we can cover k floors
+        while (dp[moves][n] < k) {
+            moves++;
+
+            for (int e = 1; e <= n; e++) {
+                dp[moves][e] = dp[moves - 1][e - 1] 
+                             + dp[moves - 1][e] 
+                             + 1;
+            }
+        }
+
+        System.out.println(moves);
+    }
+}
