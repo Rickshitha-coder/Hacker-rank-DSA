@@ -1,0 +1,61 @@
+Date: 05/05/2026
+67. Dynamic Programming - Pattern Matcher for Flexible Search Queries
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static boolean verifyMatch(String in, String p) {
+
+        int l1 = in.length();
+        int l2 = p.length();
+
+        boolean[][] match = new boolean[l1 + 1][l2 + 1];
+
+        match[0][0] = true;
+
+        // Handle patterns like a*, a*b*
+        for (int j = 2; j <= l2; j++) {
+            if (p.charAt(j - 1) == '*') {
+                match[0][j] = match[0][j - 2];
+            }
+        }
+
+        for (int i = 1; i <= l1; i++) {
+            for (int j = 1; j <= l2; j++) {
+
+                // Case 1: normal match or '.'
+                if (in.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.') {
+                    match[i][j] = match[i - 1][j - 1];
+                }
+
+                // Case 2: '*'
+                else if (p.charAt(j - 1) == '*') {
+
+                    // zero occurrence
+                    match[i][j] = match[i][j - 2];
+
+                    // one or more occurrence
+                    if (p.charAt(j - 2) == '.' || p.charAt(j - 2) == in.charAt(i - 1)) {
+                        match[i][j] = match[i][j] || match[i - 1][j];
+                    }
+                }
+            }
+        }
+
+        return match[l1][l2];
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String input = sc.nextLine();   
+        String pattern = sc.nextLine();  
+
+        boolean isMatch = verifyMatch(input, pattern);
+
+        System.out.println(isMatch);
+    }
+}
