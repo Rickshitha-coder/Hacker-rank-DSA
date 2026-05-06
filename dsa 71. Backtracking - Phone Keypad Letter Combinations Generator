@@ -1,0 +1,61 @@
+Date : 06/05/2026
+71. Backtracking - Phone Keypad Letter Combinations Generator
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    //array of string
+     static String[] map = {
+        "", "", "abc", "def", "ghi", "jkl","mno", "pqrs", "tuv", "wxyz"
+    };
+    
+    
+    //backtacking
+    
+     static void backtrack(String digits , int index ,StringBuilder current , List<String> combinations)
+     {
+         //base case
+         if(index == digits.length())
+         {
+             combinations.add(current.toString());
+             return;
+         }
+         
+         String letters=map[digits.charAt(index) - '0']; //map['2'-'0'] 0--48 1--49 2--50
+         
+         for(char ch: letters.toCharArray())
+         {
+             //1 - choose
+             current.append(ch);
+             
+             //2 - explore recurse/bbacktrack
+             backtrack(digits,index+1,current,combinations);
+             
+             //3 - undo
+             current.deleteCharAt(current.length()-1);
+             
+         }
+     }
+
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+        
+        String digits=sc.nextLine();
+        
+        List<String> combinations = new ArrayList<>();
+        
+        if(digits.length()==0)
+        {
+            System.out.println(combinations);
+            return;   
+        }
+        
+        backtrack(digits , 0 , new StringBuilder() , combinations);
+        
+        System.out.println(combinations);
+        
+    }
+}
