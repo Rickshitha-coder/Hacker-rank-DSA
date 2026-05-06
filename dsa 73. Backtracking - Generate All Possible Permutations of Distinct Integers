@@ -1,0 +1,57 @@
+Date : 06/05/2026
+73. Backtracking - Generate All Possible Permutations of Distinct Integers
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static List<List<Integer>> result = new ArrayList<>();
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        // read input: "1 2 3"
+        String[] input = sc.nextLine().split(" ");
+        
+        int[] nums = new int[input.length];
+        
+        for (int i = 0; i < input.length; i++) {
+            nums[i] = Integer.parseInt(input[i]);
+        }
+
+        boolean[] used = new boolean[nums.length];
+
+        backtrack(nums, new ArrayList<>(), used);
+
+        System.out.println(result);
+    }
+
+    static void backtrack(int[] nums, List<Integer> current, boolean[] used) {
+
+        // base case: permutation complete
+        if (current.size() == nums.length) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // if not used
+            if (!used[i]) {
+
+                // 1. choose
+                current.add(nums[i]);
+                used[i] = true;
+
+                // 2. explore
+                backtrack(nums, current, used);
+
+                // 3. undo (backtrack)
+                current.remove(current.size() - 1);
+                used[i] = false;
+            }
+        }
+    }
+}
