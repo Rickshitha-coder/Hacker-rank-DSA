@@ -1,0 +1,54 @@
+Date : 07/05/2026
+75. Backtracking - Find All Unique Combinations That Sum to Target
+
+import java.util.*;
+
+public class Main {
+
+    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(0, candidates, target, new ArrayList<>(), result);
+        return result;
+    }
+
+    private static void backtrack(int start, int[] candidates, int target,
+                                  List<Integer> path, List<List<Integer>> result) {
+
+        // Base case: target achieved
+        if (target == 0) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        // If target becomes negative, stop
+        if (target < 0) {
+            return;
+        }
+
+        // Try all possibilities starting from 'start'
+        for (int i = start; i < candidates.length; i++) {
+            path.add(candidates[i]); // choose
+
+            // reuse same element  pass i
+            backtrack(i, candidates, target - candidates[i], path, result);
+
+            path.remove(path.size() - 1); // backtrack
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] candidates = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            candidates[i] = sc.nextInt();
+        }
+
+        int target = sc.nextInt();
+
+        List<List<Integer>> result = combinationSum(candidates, target);
+        System.out.println(result);
+    }
+}
