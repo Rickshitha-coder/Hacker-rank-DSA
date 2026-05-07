@@ -1,0 +1,35 @@
+Date : 07/052026
+74. Backtracking - Generate All Combinations of k Numbers from 1 to n
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    static List<List<Integer>> combinations = new ArrayList<>();
+    
+    static void backtrack(int start,int n,int k,List<Integer> track){
+        if(track.size()==k){
+            combinations.add(new ArrayList<>(track));
+            return;
+        }
+        //find combinations
+        for(int i=start; i<=n; i++){
+            //step1--choose
+            track.add(i);
+            //step2--explore
+            backtrack(i+1,n,k,track);
+            //step3--undo
+            track.remove(track.size()-1);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner (System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        backtrack(1,n,k,new ArrayList<>());
+        System.out.println(combinations);
+            
+    }
+}
