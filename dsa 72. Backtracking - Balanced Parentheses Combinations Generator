@@ -1,0 +1,35 @@
+Date : 07/05/2026
+72. Backtracking - Balanced Parentheses Combinations Generator
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    static void backtrack(int n,int open, int close,StringBuilder currentString,List<String>combinations){
+        //base case
+        if (currentString.length()==2*n){ //string length reach 6 --stop
+            combinations.add(currentString.toString());
+            return;
+        }
+        //open
+        if(open < n){
+            currentString.append('(');//step1 --choose
+            backtrack(n,open+1,close,currentString,combinations);//step2 --explore
+            currentString.deleteCharAt(currentString.length()-1); //step3 --undo
+        }
+        if(close < open){
+            currentString.append(')');
+            backtrack(n,open,close+1,currentString,combinations);
+            currentString.deleteCharAt(currentString.length()-1);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        List<String> combinations = new ArrayList<>();
+        backtrack(n,0,0,new StringBuilder(),combinations); //n,open,close,current,output
+        System.out.println(combinations);
+        
+    }
+}
