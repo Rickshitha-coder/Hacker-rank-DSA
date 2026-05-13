@@ -1,0 +1,42 @@
+Date : 13-05-2026
+88. String Algorithm - Word Ranking System for Lexicographic Dictionaries
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        int n = s.length();
+
+     
+        long[] fact = new long[n + 1];
+        fact[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            fact[i] = fact[i - 1] * i;
+        }
+
+        List<Character> list = new ArrayList<>();
+        for (char c : s.toCharArray()) {
+            list.add(c);
+        }
+        Collections.sort(list);
+
+        long rank = 0;
+
+        for (int i = 0; i < n; i++) {
+            char current = s.charAt(i);
+
+            int idx = list.indexOf(current);
+            rank += idx * fact[n - i - 1];
+
+ 
+            list.remove(idx);
+        }
+
+        System.out.println(rank + 1);
+    }
+}
