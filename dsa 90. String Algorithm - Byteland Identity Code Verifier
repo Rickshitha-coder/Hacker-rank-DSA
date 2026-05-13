@@ -1,0 +1,53 @@
+Date : 13/05/2026 HW
+90. String Algorithm - Byteland Identity Code Verifier
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) 
+    {
+
+        Scanner sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+
+        while (T-- > 0) 
+        {
+
+            String s = sc.next();
+
+            int[] freq = new int[26];
+
+            for (char ch : s.toCharArray()) 
+            {
+                freq[ch - 'a']++;
+            }
+
+            boolean isSuperASCII = true;
+
+            for (int i = 0; i < 26; i++) 
+            {
+                if (freq[i] > 0) 
+                {
+                    int asciiValue = i + 1;
+
+                    if (freq[i] != asciiValue) 
+                    {
+                        isSuperASCII = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isSuperASCII) 
+            {
+                System.out.println("YES");
+            } 
+            else 
+            {
+                System.out.println("NO");
+            }
+        }
+    }
+}
