@@ -1,0 +1,58 @@
+Date : 15-05-2026
+93. String Algorithm - Auto-correcting Usernames for Palindrome Checkers
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    // Function to compute LPS array
+    static int[] computeLPS(String str) {
+        int n = str.length();
+        int[] lps = new int[n];
+
+        int len = 0;
+        int i = 1;
+
+        while (i < n) {
+            if (str.charAt(i) == str.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        return lps;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        String reversed = new StringBuilder(s).reverse().toString();
+
+        // Create temporary string
+        String temp = s + "#" + reversed;
+
+        // Compute LPS
+        int[] lps = computeLPS(temp);
+
+        // Length of longest palindromic prefix
+        int longestPrefix = lps[temp.length() - 1];
+
+        // Characters to add
+        String toAdd = reversed.substring(0, s.length() - longestPrefix);
+
+        // Result
+        System.out.println(toAdd + s);
+
+        sc.close();
+    }
+}
