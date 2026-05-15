@@ -1,0 +1,23 @@
+Date : 15/05/2026
+97. Bitwise Algorithm - Secure Code Scanner: Check Binary Symmetry in Access Codes
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int x = sc.nextInt();
+
+        String binary = Integer.toBinaryString(x);
+        String reverse = new StringBuilder(binary).reverse().toString();
+
+        if (binary.equals(reverse)) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+    }
+}
